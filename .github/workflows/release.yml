@@ -28,4 +28,11 @@ jobs:
             exit 1
           fi
       - run: npm run build
-      - run: npm publish --provenance --access public
+      - name: Publish unless this version is already on npm
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "flow-select@$VERSION" version > /dev/null 2>&1; then
+            echo "flow-select@$VERSION is already on npm, nothing to publish."
+          else
+            npm publish --provenance --access public
+          fi
