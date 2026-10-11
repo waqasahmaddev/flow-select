@@ -803,7 +803,9 @@ export class FlowSelect {
     }
     const target = event.target;
     if (target.closest('.fs-clear, .fs-chip-remove')) {
-      event.preventDefault();
+      if (this.#pointer !== 'touch') {
+        event.preventDefault();
+      }
       return;
     }
     if (this.#pointer === 'touch') {
@@ -818,8 +820,18 @@ export class FlowSelect {
     }
     if (!this.#isOpen) {
       this.open();
-    } else if (target !== this.#input) {
+    } else if (!this.#keepsOpenOnTap(target)) {
       this.close();
+    }
+  }
+
+  #keepsOpenOnTap(target) {
+    return !this.multiple && Boolean(this.#input) && !this.#input.readOnly && !target.closest('.fs-caret');
+  }
+
+  #refocus() {
+    if (this.#pointer !== 'touch') {
+      this.focus();
     }
   }
 
@@ -828,20 +840,24 @@ export class FlowSelect {
     const remove = target.closest('.fs-chip-remove');
     if (remove) {
       this.#removeValue(remove.closest('.fs-chip').dataset.value);
-      this.focus();
+      this.#refocus();
       return;
     }
     if (target.closest('.fs-clear')) {
       this.close({ restoreFocus: false });
       this.clear();
-      this.focus();
+      this.#refocus();
       return;
     }
     if (this.#pointerHandled) {
       this.#pointerHandled = false;
       return;
     }
-    if (this.#disabled || (target === this.#input && this.#isOpen)) {
+    if (this.#disabled) {
+      return;
+    }
+    if (this.#isOpen && this.#keepsOpenOnTap(target)) {
+      this.focus();
       return;
     }
     this.focus();

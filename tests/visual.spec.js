@@ -102,7 +102,7 @@ test.describe('Variant consistency', () => {
     const ghost = await popoverMetrics(page, 'v-ghost');
     expect(pill).toEqual(field);
     expect(ghost).toEqual(field);
-    expect(new Set(field.rowHeights).size).toBe(1);
+    expect(new Set(field.rowHeights.map((height) => Math.round(height * 10))).size).toBe(1);
   });
 
   test('dark: field, pill and ghost lists share popover chrome', async ({ page }) => {

@@ -26,9 +26,10 @@ export function positionPopover(popover, anchor, { matchWidth, rtl }) {
   const width = popover.offsetWidth;
 
   const placeBelow = natural <= below || below >= above;
-  const available = Math.max(MIN_HEIGHT_PX, placeBelow ? below : above);
+  const available = Math.min(Math.max(MIN_HEIGHT_PX, placeBelow ? below : above), view.height - 2 * MARGIN_PX);
   const height = Math.min(natural, available);
-  const top = placeBelow ? rect.bottom + GAP_PX : rect.top - GAP_PX - height;
+  const wanted = placeBelow ? rect.bottom + GAP_PX : rect.top - GAP_PX - height;
+  const top = Math.max(view.top + MARGIN_PX, Math.min(wanted, view.top + view.height - MARGIN_PX - height));
   const preferred = rtl ? rect.right - width : rect.left;
   const left = Math.max(view.left + MARGIN_PX, Math.min(preferred, view.left + view.width - MARGIN_PX - width));
 

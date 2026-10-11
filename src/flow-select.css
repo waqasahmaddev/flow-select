@@ -89,6 +89,13 @@ select[data-flow-select][data-fs-variant="ghost"]:not(.fs-native) {
   border-color: transparent;
 }
 
+:where(.fs, .fs-popover),
+:where(.fs, .fs-popover) *,
+:where(.fs, .fs-popover) *::before,
+:where(.fs, .fs-popover) *::after {
+  box-sizing: border-box;
+}
+
 /* ---------- Sizes ---------- */
 
 :is(.fs--sm, select[data-flow-select][data-fs-size="sm"]) {
@@ -701,7 +708,13 @@ li.fs-status {
 
 @media (pointer: coarse) {
   .fs-option {
-    min-height: 2.75em;
+    min-height: max(2.75em, 44px);
+  }
+
+  .fs-chip-remove,
+  .fs-clear {
+    min-width: 24px;
+    min-height: 24px;
   }
 
   .fs-option:active {
@@ -722,7 +735,7 @@ li.fs-status {
 
   .fs-control:has(:focus-visible) {
     outline: 2px solid Highlight;
-    outline-offset: 1px;
+    outline-offset: -2px;
   }
 
   .fs-chip.is-active {

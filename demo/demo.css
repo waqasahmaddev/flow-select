@@ -144,6 +144,9 @@ body {
 }
 
 table.keys {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
   width: 100%;
   border-collapse: collapse;
   background: var(--card-bg);

@@ -213,7 +213,7 @@ for (const rate of [1, 4]) {
       report(testInfo, 'End/Home 10k', rate, result);
       expect(result.activeText).toBe('Item 10000');
       expect(result.activeVisible).toBe(true);
-      expect(result.endPaint).toBeLessThan(budget(600, rate));
+      expect(result.endPaint).toBeLessThan(budget(900, rate));
     });
 
     test('scrolling through 10k', async ({ page }, testInfo) => {

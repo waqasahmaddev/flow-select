@@ -445,6 +445,7 @@ test.describe('touch scrolling', () => {
   });
 
   test('programmatic list scrolling keeps the popover open and the page still (WebKit fallback)', async ({ page }) => {
+    test.skip(!(await page.evaluate(() => CSS.supports('overscroll-behavior', 'contain'))), 'This browser has no overscroll-behavior support');
     await trigger(page, 'long').tap();
     const listEl = popover(page, 'long').locator('.fs-list');
     expect(await listEl.evaluate((node) => getComputedStyle(node).overscrollBehaviorY)).toBe('contain');
