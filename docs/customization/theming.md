@@ -61,6 +61,7 @@ Use `light-dark()` to give different values per mode:
 | `--fs-bg` | Control background |
 | `--fs-border` | Control border |
 | `--fs-border-hover` | Control border on hover |
+| `--fs-scrollbar` | List scrollbar thumb. Defaults to `--fs-border` |
 | `--fs-accent` | Border when focused or open, highlighted chip outline |
 | `--fs-ring` | Focus ring (a `box-shadow` value) |
 | `--fs-ghost-bg` | Ghost variant background |

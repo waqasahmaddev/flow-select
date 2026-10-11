@@ -498,7 +498,7 @@ select[data-flow-select][data-fs-variant="ghost"]:not(.fs-native) {
   list-style: none;
   outline: none;
   scrollbar-width: thin;
-  scrollbar-color: var(--fs-border) transparent;
+  scrollbar-color: var(--fs-scrollbar, var(--fs-border)) transparent;
 }
 
 .fs-group {
@@ -583,6 +583,10 @@ select[data-flow-select][data-fs-variant="ghost"]:not(.fs-native) {
   contain-intrinsic-size: auto 2em;
 }
 
+.fs-text > .fs-label {
+  line-height: 1.3;
+}
+
 .fs-label {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -593,8 +597,13 @@ select[data-flow-select][data-fs-variant="ghost"]:not(.fs-native) {
   font-weight: 500;
 }
 
+.fs-popover:has(.fs-text) {
+  min-width: max(var(--fs-pop-min-width), var(--fs-anchor-width, 0px), 18rem);
+}
+
 .fs-meta {
   display: flex;
+  line-height: 1.3;
   align-items: center;
   gap: .5em;
   min-width: 0;

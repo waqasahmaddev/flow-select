@@ -11,6 +11,17 @@
 </script>
 ```
 
+### Defaults before automatic start
+
+Automatic start reads every select at once, so set shared options first. Define `window.flowSelectDefaults` before the script tag; it is merged into `FlowSelect.defaults`:
+
+```html
+<script>
+  window.flowSelectDefaults = { mapItem: (item) => ({ ...item, meta: item.email }) };
+</script>
+<script src="/lib/flow-select.min.js"></script>
+```
+
 ## ES module
 
 ```js

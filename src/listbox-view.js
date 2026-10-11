@@ -18,6 +18,7 @@ export class ListboxView {
     this.activeIndex = -1;
     this.tail = null;
     list.addEventListener('scroll', () => this.checkEnd(), { passive: true });
+    list.addEventListener('mouseover', (event) => this.titleWhenClipped(event.target));
   }
 
   setRows(rows) {
@@ -125,6 +126,18 @@ export class ListboxView {
       this.list.append(fragment);
     }
     this.rendered = end;
+  }
+
+  titleWhenClipped(target) {
+    const row = target.closest?.('.fs-option');
+    if (!row || row.dataset.titled) {
+      return;
+    }
+    row.dataset.titled = '1';
+    const parts = [...row.querySelectorAll('.fs-label, .fs-meta-text, .fs-badge')];
+    if (parts.some((part) => part.scrollWidth > part.clientWidth)) {
+      row.title = parts.map((part) => part.textContent).join(' · ');
+    }
   }
 
   createGroup(label) {
