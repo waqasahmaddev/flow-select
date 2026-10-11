@@ -1,0 +1,73 @@
+{
+  "name": "flow-select",
+  "version": "0.1.0",
+  "description": "A fast, keyboard-first select for plain HTML forms. No dependencies.",
+  "license": "MIT",
+  "author": "Waqas Ahmad",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waqasahmaddev/flow-select.git"
+  },
+  "homepage": "https://waqasahmaddev.github.io/flow-select/",
+  "bugs": {
+    "url": "https://github.com/waqasahmaddev/flow-select/issues"
+  },
+  "keywords": [
+    "select",
+    "dropdown",
+    "combobox",
+    "multiselect",
+    "autocomplete",
+    "accessibility",
+    "vanilla-js"
+  ],
+  "type": "module",
+  "main": "dist/flow-select.esm.js",
+  "module": "dist/flow-select.esm.js",
+  "browser": "dist/flow-select.min.js",
+  "unpkg": "dist/flow-select.min.js",
+  "jsdelivr": "dist/flow-select.min.js",
+  "style": "dist/flow-select.css",
+  "exports": {
+    ".": {
+      "import": "./dist/flow-select.esm.js",
+      "default": "./dist/flow-select.min.js"
+    },
+    "./css": "./dist/flow-select.css",
+    "./style.css": "./dist/flow-select.css"
+  },
+  "sideEffects": [
+    "*.css",
+    "./dist/flow-select.js",
+    "./dist/flow-select.min.js",
+    "./src/auto.js"
+  ],
+  "files": [
+    "dist/*.js",
+    "dist/*.css",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "serve": "node scripts/serve.mjs",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "docs:dev": "vitepress dev docs --port 5190",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs --port 5191",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "bootstrap": "^5.3.8",
+    "esbuild": "^0.28.2",
+    "htmx.org": "^2.0.11",
+    "vitepress": "^1.6.4"
+  }
+}

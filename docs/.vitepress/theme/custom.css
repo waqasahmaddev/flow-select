@@ -1,0 +1,70 @@
+.fs-demo {
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 16px 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  overflow: visible;
+}
+
+.fs-demo-body {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+}
+
+.fs-demo-body > * {
+  margin: 0 !important;
+}
+
+.fs-demo-inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.fs-demo-body label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.fs-demo-body .field {
+  max-width: 360px;
+}
+
+.fs-demo-log {
+  margin: 0 !important;
+  padding: 10px 24px !important;
+  border-top: 1px solid var(--vp-c-divider);
+  font: 12px/1.7 var(--vp-font-family-mono);
+  list-style: none !important;
+  color: var(--vp-c-text-2);
+}
+
+.fs-demo-log li + li {
+  margin-top: 0 !important;
+}
+
+.vp-doc .fs :is(ul, li),
+.vp-doc .fs-popover :is(ul, li) {
+  margin: 0;
+  list-style: none;
+}
+
+.vp-doc .fs ul {
+  padding: 0;
+}
+
+.vp-doc .fs-demo .swatch {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.vp-doc .fs-value {
+  line-height: normal;
+}

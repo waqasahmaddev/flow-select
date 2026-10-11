@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>flow-select remote form</title>
+  <link rel="stylesheet" href="/src/flow-select.css">
+  <style>
+    body {
+      padding: 24px;
+      font: 15px/1.5 system-ui, sans-serif;
+    }
+    .field {
+      width: 320px;
+      margin-bottom: 16px;
+    }
+  </style>
+  <script type="module">
+    import { FlowSelect, autoInit } from '/src/index.js';
+    window.FlowSelect = FlowSelect;
+    autoInit();
+    window.fixtureReady = true;
+  </script>
+</head>
+<body>
+<form id="remote-form" method="post" action="/api/echo">
+  <div class="field">
+    <label for="person">Person</label>
+    <select id="person" name="person" data-flow-select data-fs-url="/api/people?delay=50"></select>
+  </div>
+  <div class="field">
+    <label for="team">Team</label>
+    <select id="team" name="team[]" multiple data-flow-select data-fs-url="/api/people?delay=50">
+      <option value="p5" selected data-meta="noah.patel@example.com" data-avatar="NP">Noah Patel</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="owner">Owner</label>
+    <select id="owner" name="owner" data-flow-select data-fs-url="/api/people?delay=50">
+      <option value="p3" selected>Jonas Patel</option>
+    </select>
+  </div>
+  <button type="submit" id="submit">Submit</button>
+</form>
+</body>
+</html>

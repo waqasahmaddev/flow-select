@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>flow-select early init</title>
+  <link rel="stylesheet" href="/dist/flow-select.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 24px;
+      font: 15px/1.5 system-ui, sans-serif;
+    }
+    .field {
+      width: 320px;
+      margin-bottom: 16px;
+    }
+  </style>
+  <script>
+    window.initLog = [];
+    window.parseLog = {};
+    document.addEventListener('flowselect:init', (event) => {
+      window.initLog.push({ id: event.target.id, ready: document.readyState });
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+      window.atDomContentLoaded = document.querySelectorAll('.fs').length;
+    });
+  </script>
+  <script src="/dist/flow-select.js"></script>
+  <script src="/node_modules/htmx.org/dist/htmx.min.js" defer></script>
+</head>
+<body>
+<form id="early-form">
+  <div class="field">
+    <label for="first">First</label>
+    <select id="first" name="first" data-flow-select>
+      <option value="a">Alpha</option>
+      <option value="b" selected>Beta</option>
+    </select>
+    <script>
+      window.parseLog.first = {
+        enhanced: window.FlowSelect.get(document.getElementById('first')) !== null,
+        wrapped: document.getElementById('first').parentElement.classList.contains('fs'),
+        shown: document.querySelector('.fs:has(> #first) .fs-value')?.textContent ?? null
+      };
+    </script>
+  </div>
+
+  <div class="field">
+    <label for="split">Split by a script</label>
+    <select id="split" name="split" data-flow-select>
+      <option value="one">One</option>
+      <script>
+        window.parseLog.splitMidway = window.FlowSelect.get(document.getElementById('split')) !== null;
+      </script>
+      <option value="two" selected>Two</option>
+      <option value="three">Three</option>
+    </select>
+    <script>
+      window.parseLog.splitAfter = window.FlowSelect.get(document.getElementById('split'))?.value ?? null;
+    </script>
+  </div>
+
+  <div class="field">
+    <label for="filled">Filled later by script</label>
+    <select id="filled" name="filled" data-flow-select>
+      <option value="">Pick one</option>
+    </select>
+    <script>
+      window.parseLog.filledEnhanced = window.FlowSelect.get(document.getElementById('filled')) !== null;
+      const filled = document.getElementById('filled');
+      filled.append(new Option('Late one', 'late1'), new Option('Late two', 'late2', true, true));
+    </script>
+  </div>
+
+  <div class="field">
+    <label for="tags">Tags</label>
+    <select id="tags" name="tags[]" multiple data-flow-select>
+      <option value="css" selected>CSS</option>
+      <option value="html">HTML</option>
+      <option value="js" selected>JavaScript</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="manual">Manual</label>
+    <select id="manual" name="manual" data-flow-select="manual">
+      <option value="m">Manual one</option>
+    </select>
+    <script>
+      window.parseLog.manual = window.FlowSelect.get(document.getElementById('manual'));
+    </script>
+  </div>
+
+  <table>
+    <tr>
+      <td><select id="cell" name="cell" data-flow-select><option value="x">Xray</option><option value="y">Yankee</option></select></td>
+    </tr>
+  </table>
+</form>
+<div id="tail">Tail</div>
+</body>
+</html>

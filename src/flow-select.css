@@ -1,0 +1,740 @@
+/*
+ * flow-select
+ * Colours and sizes are custom properties. Light and dark come from the
+ * element's color-scheme, so the page decides: Bootstrap's data-bs-theme,
+ * a .dark root class, data-fs-theme="dark|light|auto", or CSS color-scheme.
+ */
+
+:where(:root) {
+  --fs-text: light-dark(#18181b, #ececec);
+  --fs-muted: light-dark(#71717a, #a1a1aa);
+  --fs-placeholder: light-dark(#a1a1aa, #8a8a8a);
+  --fs-bg: light-dark(#ffffff, transparent);
+  --fs-border: light-dark(#d4d4d8, #454545);
+  --fs-border-hover: light-dark(#a1a1aa, #5f5f5f);
+  --fs-accent: light-dark(#71717a, #8a8a8a);
+  --fs-ring: 0 0 0 3px light-dark(rgb(0 0 0 / .05), rgb(255 255 255 / .06));
+  --fs-ghost-bg: light-dark(#f4f4f5, #2e2e2e);
+  --fs-ghost-hover: light-dark(#e9e9eb, #363636);
+  --fs-pop-bg: light-dark(#ffffff, #2b2b2b);
+  --fs-pop-border: light-dark(#e4e4e7, #3a3a3a);
+  --fs-pop-shadow: 0 12px 32px light-dark(rgb(0 0 0 / .1), rgb(0 0 0 / .45)), 0 2px 6px light-dark(rgb(0 0 0 / .05), rgb(0 0 0 / .25));
+  --fs-active-bg: light-dark(#f4f4f5, #3b3b3b);
+  --fs-chip-bg: light-dark(#f4f4f5, #3a3a3a);
+  --fs-chip-text: var(--fs-text);
+  --fs-badge-bg: light-dark(rgb(0 0 0 / .06), rgb(255 255 255 / .1));
+  --fs-avatar-bg: #52525b;
+  --fs-avatar-text: #ffffff;
+  --fs-invalid: light-dark(#dc2626, #f87171);
+  --fs-description: var(--fs-muted);
+
+  --fs-height: 2.5em;
+  --fs-pad-x: .875em;
+  --fs-radius: .5rem;
+  --fs-radius-pop: .75rem;
+  --fs-radius-item: .4375rem;
+  --fs-pop-max-height: 20rem;
+  --fs-pop-min-width: 12rem;
+  --fs-duration: 90ms;
+}
+
+:where([data-fs-theme="dark"], [data-bs-theme="dark"], [data-theme="dark"], :root.dark) {
+  color-scheme: dark;
+}
+
+:where([data-fs-theme="light"], [data-bs-theme="light"], [data-theme="light"]) {
+  color-scheme: light;
+}
+
+:where([data-fs-theme="auto"]) {
+  color-scheme: light dark;
+}
+
+/* ---------- Before the script runs: same box, no layout shift ---------- */
+
+select[data-flow-select]:not(.fs-native) {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: var(--fs-height);
+  margin: 0;
+  padding: 0 calc(var(--fs-pad-x) + 1.5em) 0 var(--fs-pad-x);
+  overflow: hidden;
+  background: var(--fs-bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 15 5 5 5-5'/%3E%3Cpath d='m7 9 5-5 5 5'/%3E%3C/svg%3E") no-repeat right var(--fs-pad-x) center / 1em;
+  border: 1px solid var(--fs-border);
+  border-radius: var(--fs-radius);
+  color: var(--fs-text);
+  font: inherit;
+  appearance: none;
+}
+
+select[data-flow-select][multiple]:not(.fs-native) {
+  color: transparent;
+}
+
+select[data-flow-select]:is([data-fs-variant="pill"], [data-fs-variant="ghost"]):not(.fs-native) {
+  display: inline-block;
+  width: auto;
+  field-sizing: content;
+  vertical-align: middle;
+}
+
+select[data-flow-select][data-fs-variant="pill"]:not(.fs-native) {
+  padding-inline-start: 1.125em;
+  border-radius: 999px;
+}
+
+select[data-flow-select][data-fs-variant="ghost"]:not(.fs-native) {
+  background-color: var(--fs-ghost-bg);
+  border-color: transparent;
+}
+
+/* ---------- Sizes ---------- */
+
+:is(.fs--sm, select[data-flow-select][data-fs-size="sm"]) {
+  --fs-height: 2.25em;
+  --fs-pad-x: .625em;
+  --fs-radius: .375rem;
+  font-size: .875em;
+}
+
+:is(.fs--lg, select[data-flow-select][data-fs-size="lg"]) {
+  --fs-height: 2.75em;
+  --fs-pad-x: 1em;
+  --fs-radius: .625rem;
+  font-size: 1.125em;
+}
+
+/* ---------- Wrapper and control ---------- */
+
+.fs {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  max-width: 100%;
+  color: var(--fs-text);
+}
+
+.fs--field {
+  display: flex;
+}
+
+:where(.fs--field) {
+  width: 100%;
+}
+
+.fs [hidden],
+.fs-popover [hidden],
+.fs-popover[hidden] {
+  display: none !important;
+}
+
+.fs-native {
+  position: absolute !important;
+  inset: 0 auto auto 0;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fs-control {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: var(--fs-height);
+  padding-inline-end: var(--fs-pad-x);
+  background: var(--fs-bg);
+  border: 1px solid var(--fs-border);
+  border-radius: var(--fs-radius);
+  cursor: pointer;
+}
+
+.fs-control:hover {
+  border-color: var(--fs-border-hover);
+}
+
+.fs-control:has(:focus-visible),
+.fs.is-open .fs-control {
+  border-color: var(--fs-accent);
+}
+
+.fs-control:has(:focus-visible) {
+  box-shadow: var(--fs-ring);
+}
+
+.fs :is(.fs-trigger, .fs-input):focus-visible,
+.fs-popover .fs-input:focus-visible {
+  outline: none;
+}
+
+.fs--pill .fs-control {
+  border-radius: 999px;
+}
+
+.fs--ghost .fs-control {
+  background: var(--fs-ghost-bg);
+  border-color: transparent;
+}
+
+.fs--ghost .fs-control:hover,
+.fs--ghost.is-open .fs-control {
+  background: var(--fs-ghost-hover);
+  border-color: transparent;
+}
+
+.fs--ghost .fs-control:has(:focus-visible) {
+  border-color: var(--fs-accent);
+}
+
+.fs-trigger,
+.fs-field {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-self: stretch;
+  padding-inline: var(--fs-pad-x) .5em;
+}
+
+.fs-trigger {
+  margin: 0;
+  background: none;
+  border: 0;
+  border-radius: inherit;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: inherit;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fs--pill :is(.fs-trigger, .fs-field) {
+  padding-inline-start: 1.125em;
+}
+
+.fs-field {
+  display: grid;
+  align-items: center;
+}
+
+.fs-field > * {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+.fs-value {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.fs-value-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fs-value.is-placeholder {
+  color: var(--fs-placeholder);
+}
+
+.fs--pill .fs-value.is-placeholder,
+.fs--ghost .fs-value.is-placeholder {
+  color: inherit;
+}
+
+.fs.is-open .fs-field .fs-value {
+  opacity: .55;
+}
+
+.fs.has-query .fs-field .fs-value {
+  visibility: hidden;
+}
+
+.fs:not(.is-open) .fs-input {
+  caret-color: transparent;
+}
+
+.fs-input {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  outline: none;
+  color: inherit;
+  font: inherit;
+}
+
+.fs-input::placeholder {
+  color: var(--fs-placeholder);
+  opacity: 1;
+}
+
+.fs-input[readonly] {
+  caret-color: transparent;
+  cursor: inherit;
+}
+
+.fs-icon {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fs-caret {
+  color: var(--fs-muted);
+}
+
+.fs-clear:not([hidden]) + .fs-caret {
+  display: none;
+}
+
+.fs-clear {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.25em;
+  height: 1.25em;
+  margin-inline-end: -.25em;
+  padding: 0;
+  background: var(--fs-active-bg);
+  border: 0;
+  border-radius: 50%;
+  color: var(--fs-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.fs-clear .fs-icon {
+  width: .8em;
+  height: .8em;
+}
+
+.fs-clear:hover {
+  background: var(--fs-border);
+}
+
+.fs.is-invalid .fs-control {
+  border-color: var(--fs-invalid);
+}
+
+.fs.is-disabled {
+  opacity: .55;
+  pointer-events: none;
+}
+
+/* ---------- Multiple ---------- */
+
+.fs--multiple .fs-control {
+  padding-block: calc((var(--fs-height) - 2px - 1.75em) / 2);
+  padding-inline-start: .375em;
+  cursor: text;
+}
+
+.fs-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .25em;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fs-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .375em;
+  max-width: 100%;
+  height: 2em;
+  padding-inline: .625em .25em;
+  background: var(--fs-chip-bg);
+  color: var(--fs-chip-text);
+  border-radius: .3125rem;
+  font-size: .875em;
+  line-height: 1.3;
+}
+
+.fs-chip-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fs-chip-remove {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.375em;
+  height: 1.375em;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: .25rem;
+  color: var(--fs-muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.fs-chip-remove .fs-icon {
+  width: .8em;
+  height: .8em;
+}
+
+.fs-chip-remove:hover {
+  background: var(--fs-badge-bg);
+  color: var(--fs-text);
+}
+
+.fs-chip.is-active {
+  outline: 2px solid var(--fs-accent);
+  outline-offset: 1px;
+}
+
+.fs-chip-input {
+  display: flex;
+  flex: 1 1 3em;
+  min-width: 3em;
+  height: 1.75em;
+  padding-inline: .4375em;
+}
+
+/* ---------- Popover ---------- */
+
+.fs-popover {
+  position: fixed;
+  inset: auto;
+  z-index: 1080;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-width: max(var(--fs-pop-min-width), var(--fs-anchor-width, 0px));
+  max-width: min(32rem, calc(100vw - 1rem));
+  max-height: min(var(--fs-pop-max-height), var(--fs-available-height, 100vh));
+  margin: 0;
+  padding: .3125rem;
+  overflow: hidden;
+  background: var(--fs-pop-bg);
+  color: var(--fs-text);
+  border: 1px solid var(--fs-pop-border);
+  border-radius: var(--fs-radius-pop);
+  box-shadow: var(--fs-pop-shadow);
+  font: inherit;
+  transition: opacity var(--fs-duration) ease-out, translate var(--fs-duration) ease-out;
+}
+
+.fs-popover[popover]:not(:popover-open) {
+  display: none;
+}
+
+@starting-style {
+  .fs-popover:popover-open,
+  .fs-popover:not([popover]) {
+    opacity: 0;
+    translate: 0 -3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-popover {
+    transition: none;
+  }
+}
+
+.fs-search {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+  flex: none;
+  height: 2.25em;
+  margin: .125rem .125rem .25rem;
+  padding: 0 .75em;
+  border: 1px solid var(--fs-border);
+  border-radius: .5rem;
+}
+
+.fs-search:focus-within {
+  border-color: var(--fs-accent);
+}
+
+.fs-search .fs-icon {
+  color: var(--fs-muted);
+}
+
+.fs-list {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+  outline: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--fs-border) transparent;
+}
+
+.fs-group {
+  padding: .75em .75em .3125em 2.125em;
+  color: var(--fs-muted);
+  font-size: .75em;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.fs-group:first-child {
+  padding-top: .375em;
+}
+
+.fs-list--plain .fs-group {
+  padding-inline-start: .75em;
+}
+
+.fs-option {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+  min-height: 2em;
+  padding: .3125em .75em .3125em .625em;
+  border-radius: var(--fs-radius-item);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fs-option.is-active {
+  background: var(--fs-active-bg);
+}
+
+.fs-option[aria-disabled="true"] {
+  opacity: .45;
+  cursor: default;
+}
+
+.fs-check {
+  visibility: hidden;
+}
+
+.fs-option[aria-selected="true"] .fs-check,
+.fs-create .fs-check {
+  visibility: visible;
+}
+
+.fs-create .fs-check {
+  color: var(--fs-muted);
+}
+
+.fs-list--check-end .fs-option {
+  padding-inline: .75em;
+}
+
+.fs-list--check-end .fs-check {
+  order: 2;
+  margin-inline-start: auto;
+}
+
+.fs-list--plain .fs-option:not(.fs-create) .fs-check {
+  display: none;
+}
+
+.fs-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.fs-option > .fs-label {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.fs-list.is-large .fs-option {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 2em;
+}
+
+.fs-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fs-option[aria-selected="true"] .fs-label {
+  font-weight: 500;
+}
+
+.fs-meta {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+  min-width: 0;
+  color: var(--fs-muted);
+  font-size: .8em;
+}
+
+.fs-meta-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fs-badge {
+  flex: none;
+  padding: 0 .5em;
+  background: var(--fs-badge-bg);
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.fs-description {
+  margin-top: .125em;
+  color: var(--fs-description);
+  font-size: .875em;
+  line-height: 1.4;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.fs-option.has-description {
+  align-items: flex-start;
+}
+
+.fs-option.has-description > :is(.fs-check, .fs-avatar) {
+  margin-top: .1875em;
+}
+
+.fs-avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.25em;
+  height: 2.25em;
+  overflow: hidden;
+  background: var(--fs-avatar-bg);
+  color: var(--fs-avatar-text);
+  border-radius: 50%;
+  font-size: .75em;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.fs-value .fs-avatar {
+  font-size: .65em;
+}
+
+.fs-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Status ---------- */
+
+.fs-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .5em;
+  padding: .875em .75em;
+  color: var(--fs-muted);
+  font-size: .9em;
+  text-align: center;
+}
+
+li.fs-status {
+  padding: .5em;
+}
+
+.fs-spinner {
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: fs-spin .7s linear infinite;
+}
+
+@keyframes fs-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.fs-popover.is-loading .fs-list {
+  opacity: .55;
+}
+
+.fs-retry {
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--fs-text);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+@media (pointer: coarse) {
+  .fs-option {
+    min-height: 2.75em;
+  }
+
+  .fs-option:active {
+    background: var(--fs-active-bg);
+  }
+
+  .fs-input {
+    font-size: max(16px, 1em);
+  }
+}
+
+@media (forced-colors: active) {
+  .fs-option.is-active {
+    background-color: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+
+  .fs-control:has(:focus-visible) {
+    outline: 2px solid Highlight;
+    outline-offset: 1px;
+  }
+
+  .fs-chip.is-active {
+    outline-color: Highlight;
+  }
+}
+
+.fs-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

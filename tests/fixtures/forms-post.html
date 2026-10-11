@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>flow-select form post</title>
+  <link rel="stylesheet" href="/src/flow-select.css">
+  <style>
+    body {
+      padding: 24px;
+      font: 15px/1.5 system-ui, sans-serif;
+    }
+    .field {
+      width: 320px;
+      margin-bottom: 16px;
+    }
+  </style>
+  <script type="module">
+    import { FlowSelect, autoInit } from '/src/index.js';
+    window.FlowSelect = FlowSelect;
+    autoInit();
+  </script>
+</head>
+<body>
+<form id="post-form" method="post" action="/api/echo">
+  <div class="field">
+    <label for="plan">Plan</label>
+    <select id="plan" name="plan" data-flow-select>
+      <option value="free">Free</option>
+      <option value="team">Team</option>
+      <option value="business">Business</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="category">Category</label>
+    <select id="category" name="category" data-flow-select>
+      <option value="">Choose a category</option>
+      <option value="tech">Tech</option>
+      <option value="science">Science</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="tags">Tags</label>
+    <select id="tags" name="tags[]" multiple data-flow-select>
+      <option value="css">CSS</option>
+      <option value="html">HTML</option>
+      <option value="js">JavaScript</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="person">Person</label>
+    <select id="person" name="person" data-flow-select data-fs-url="/api/people"></select>
+  </div>
+  <div class="field">
+    <label for="locked">Locked</label>
+    <select id="locked" name="locked" data-flow-select disabled>
+      <option value="no">Should not be posted</option>
+    </select>
+  </div>
+  <button type="submit" id="submit">Submit</button>
+  <a id="away" href="/tests/fixtures/blank.html">Leave</a>
+</form>
+<div class="field">
+  <label for="outside">Outside the form</label>
+  <select id="outside" name="outside" form="post-form" data-flow-select>
+    <option value="a">Option A</option>
+    <option value="b">Option B</option>
+  </select>
+</div>
+</body>
+</html>

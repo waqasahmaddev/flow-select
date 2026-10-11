@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>flow-select dist fixture</title>
+  <link rel="stylesheet" href="/dist/flow-select.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 24px;
+      font: 15px/1.5 system-ui, sans-serif;
+    }
+    .field {
+      width: 320px;
+      margin-bottom: 16px;
+    }
+  </style>
+  <script src="/dist/flow-select.min.js"></script>
+</head>
+<body>
+<form id="form">
+  <div class="field">
+    <label for="fruit">Fruit</label>
+    <select id="fruit" name="fruit" data-flow-select>
+      <option value="">Choose a fruit</option>
+      <option value="apple">Apple</option>
+      <option value="banana">Banana</option>
+      <option value="cherry">Cherry</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="tags">Tags</label>
+    <select id="tags" name="tags" multiple data-flow-select>
+      <option value="css" selected>CSS</option>
+      <option value="html">HTML</option>
+      <option value="js">JavaScript</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="manual">Manual</label>
+    <select id="manual" name="manual" data-flow-select="manual">
+      <option value="a">Alpha</option>
+    </select>
+  </div>
+</form>
+</body>
+</html>

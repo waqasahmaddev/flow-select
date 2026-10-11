@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>flow-select with Bootstrap 5</title>
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/src/flow-select.css">
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script type="module">
+    import { FlowSelect, autoInit } from '/src/index.js';
+    window.FlowSelect = FlowSelect;
+    autoInit();
+    window.fixtureReady = true;
+  </script>
+</head>
+<body class="p-4">
+<div class="container" style="max-width: 640px">
+  <div class="mb-3">
+    <label class="form-label" for="page-select">On the page</label>
+    <select id="page-select" name="pageSelect" class="form-select" data-flow-select>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+    </select>
+  </div>
+  <button type="button" class="btn btn-primary" id="open-modal" data-bs-toggle="modal" data-bs-target="#demo-modal">Open modal</button>
+  <button type="button" class="btn btn-secondary" id="open-offcanvas" data-bs-toggle="offcanvas" data-bs-target="#demo-offcanvas">Open offcanvas</button>
+</div>
+
+<div class="modal fade" id="demo-modal" tabindex="-1" aria-labelledby="demo-modal-title" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="demo-modal-title">Edit item</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="max-height: 160px; overflow-y: auto">
+        <label class="form-label" for="modal-select">Priority</label>
+        <select id="modal-select" name="priority" data-flow-select data-fs-search="true">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+          <option value="urgent">Urgent</option>
+        </select>
+        <label class="form-label mt-3" for="modal-tags">Tags</label>
+        <select id="modal-tags" name="tags" multiple data-flow-select>
+          <option value="a">Alpha</option>
+          <option value="b">Beta</option>
+          <option value="c">Gamma</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="demo-offcanvas" aria-labelledby="demo-offcanvas-title">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="demo-offcanvas-title">Filters</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <label class="form-label" for="offcanvas-select">Status</label>
+    <select id="offcanvas-select" name="status" data-flow-select>
+      <option value="draft">Draft</option>
+      <option value="published">Published</option>
+    </select>
+  </div>
+</div>
+</body>
+</html>

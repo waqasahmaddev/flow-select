@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en" data-fs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>flow-select - demo</title>
+  <script>
+    try {
+      const saved = new URLSearchParams(location.search).get('theme') || localStorage.getItem('fs-demo-theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-fs-theme', saved);
+      }
+    } catch (e) {
+    }
+  </script>
+  <link rel="stylesheet" href="../dist/flow-select.css">
+  <script src="../dist/flow-select.js"></script>
+  <link rel="stylesheet" href="demo.css">
+  <script src="../node_modules/htmx.org/dist/htmx.min.js" defer></script>
+  <script type="module" src="demo.js"></script>
+</head>
+<body>
+
+<main class="page">
+
+  <header class="page-head">
+    <div>
+      <h1>flow-select</h1>
+      <p>Fast, keyboard-first select for plain HTML forms. Every example below is a real <code>&lt;select&gt;</code>.</p>
+    </div>
+    <button type="button" class="theme-toggle" id="themeToggle">Light mode</button>
+  </header>
+
+  <!-- ===================== Pill ===================== -->
+  <section class="section" id="pill">
+    <h2>Pill variant - filter bars</h2>
+    <p>For list pages. Add <code>data-fs-variant="pill"</code>.</p>
+
+    <div class="toolbar">
+      <select id="source" name="source" aria-label="Source" data-flow-select data-fs-variant="pill" data-fs-search="false">
+        <option value="">All sources</option>
+        <option value="web">Website</option>
+        <option value="mobile">Mobile app</option>
+        <option value="api">Public API</option>
+      </select>
+
+      <select id="workspace" name="workspace" aria-label="Workspace" data-flow-select data-fs-variant="pill" data-fs-search="true" data-fs-clearable="true" data-fs-search-placeholder="Search workspaces...">
+        <option value="">All workspaces</option>
+        <option value="main" selected>Main workspace</option>
+        <option value="side">Side projects</option>
+        <option value="archive">Archive</option>
+      </select>
+
+      <select id="keys" name="keys" aria-label="Keys" data-flow-select data-fs-variant="pill" data-fs-search="true" data-fs-check-position="none" data-fs-search-placeholder="Search keys...">
+        <option value="">All keys</option>
+        <optgroup label="Active keys">
+          <option value="prod">Production</option>
+          <option value="staging">Staging</option>
+        </optgroup>
+        <optgroup label="Revoked keys">
+          <option value="old" disabled>Old laptop</option>
+        </optgroup>
+      </select>
+
+      <select id="range" name="range" aria-label="Date range" data-flow-select data-fs-variant="pill" data-fs-check-position="end">
+        <option value="wtd">Week to date</option>
+        <option value="mtd">Month to date</option>
+        <option value="7d" selected>Last 7 days</option>
+        <option value="14d">Last 14 days</option>
+        <option value="30d">Last 30 days</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- ===================== Ghost ===================== -->
+  <section class="section" id="ghost">
+    <h2>Ghost variant - toolbar menus</h2>
+    <p>No border, soft background. Add <code>data-fs-variant="ghost"</code>.</p>
+
+    <div class="toolbar">
+      <select id="group-by" name="groupBy" aria-label="Group by" data-flow-select data-fs-variant="ghost">
+        <option value="">Group by</option>
+        <option value="source">Source</option>
+        <option value="item">Line item</option>
+        <option value="project">Project</option>
+        <option value="key">Key</option>
+        <option value="user">User</option>
+      </select>
+
+      <select id="sort-by" name="sortBy" aria-label="Sort by" data-flow-select data-fs-variant="ghost" data-fs-check-position="end">
+        <option value="new">Newest first</option>
+        <option value="old">Oldest first</option>
+        <option value="az">Name A to Z</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- ===================== Sizes ===================== -->
+  <section class="section" id="sizes">
+    <h2>Sizes</h2>
+    <p>Add <code>data-fs-size="sm"</code> or <code>data-fs-size="lg"</code>. Works with every variant.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Field</h3>
+        <label class="field-label" for="size-sm">Small</label>
+        <select id="size-sm" name="sizeSm" data-flow-select data-fs-size="sm">
+          <option>Draft</option>
+          <option>Published</option>
+        </select>
+        <label class="field-label gap" for="size-md">Default</label>
+        <select id="size-md" name="sizeMd" data-flow-select>
+          <option>Draft</option>
+          <option>Published</option>
+        </select>
+        <label class="field-label gap" for="size-lg">Large</label>
+        <select id="size-lg" name="sizeLg" data-flow-select data-fs-size="lg">
+          <option>Draft</option>
+          <option>Published</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <h3>Pill and ghost</h3>
+        <div class="row">
+          <select id="pill-sm" name="pillSm" aria-label="Small pill" data-flow-select data-fs-variant="pill" data-fs-size="sm">
+            <option>Small</option>
+            <option>Other</option>
+          </select>
+          <select id="pill-md" name="pillMd" aria-label="Default pill" data-flow-select data-fs-variant="pill">
+            <option>Default</option>
+            <option>Other</option>
+          </select>
+          <select id="pill-lg" name="pillLg" aria-label="Large pill" data-flow-select data-fs-variant="pill" data-fs-size="lg">
+            <option>Large</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="row gap">
+          <select id="ghost-sm" name="ghostSm" aria-label="Small ghost" data-flow-select data-fs-variant="ghost" data-fs-size="sm">
+            <option>Small</option>
+            <option>Other</option>
+          </select>
+          <select id="ghost-lg" name="ghostLg" aria-label="Large ghost" data-flow-select data-fs-variant="ghost" data-fs-size="lg">
+            <option>Large</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Multiple</h3>
+        <label class="field-label" for="size-multi-sm">Small</label>
+        <select id="size-multi-sm" name="sizeMultiSm" multiple data-flow-select data-fs-size="sm">
+          <option value="a" selected>Alpha</option>
+          <option value="b" selected>Beta</option>
+          <option value="c">Gamma</option>
+        </select>
+        <label class="field-label gap" for="size-multi-lg">Large</label>
+        <select id="size-multi-lg" name="sizeMultiLg" multiple data-flow-select data-fs-size="lg">
+          <option value="a" selected>Alpha</option>
+          <option value="b" selected>Beta</option>
+          <option value="c">Gamma</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Fields ===================== -->
+  <section class="section" id="fields">
+    <h2>Field variant - forms</h2>
+    <p>The default. Full width, same height as a text input.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Single</h3>
+        <label class="field-label" for="category">Category</label>
+        <select id="category" name="category" data-flow-select>
+          <option value="">Choose a category</option>
+          <option value="tech">Tech</option>
+          <option value="science">Science</option>
+          <option value="design">Design</option>
+          <option value="business">Business</option>
+          <option value="culture">Culture</option>
+        </select>
+
+        <label class="field-label gap" for="status">Status</label>
+        <select id="status" name="status" data-flow-select>
+          <option value="draft">Draft</option>
+          <option value="review">In review</option>
+          <option value="published" selected>Published</option>
+          <option value="archived">Archived</option>
+        </select>
+
+        <label class="field-label gap" for="fruit-inline">Search in the field (default)</label>
+        <select id="fruit-inline" name="fruitInline" data-flow-select data-fs-search="true" data-fs-clearable="true">
+          <option value="">Choose a fruit</option>
+          <option value="apple">Apple</option>
+          <option value="apricot">Apricot</option>
+          <option value="banana">Banana</option>
+          <option value="cherry">Cherry</option>
+          <option value="mango">Mango</option>
+        </select>
+
+        <label class="field-label gap" for="fruit-dropdown">Search in the list</label>
+        <select id="fruit-dropdown" name="fruitDropdown" data-flow-select data-fs-search="dropdown">
+          <option value="">Choose a fruit</option>
+          <option value="apple">Apple</option>
+          <option value="apricot">Apricot</option>
+          <option value="banana">Banana</option>
+          <option value="cherry">Cherry</option>
+          <option value="mango">Mango</option>
+        </select>
+
+        <label class="field-label gap" for="locked">Disabled</label>
+        <select id="locked" name="locked" data-flow-select disabled>
+          <option>Locked by an administrator</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <h3>Descriptions</h3>
+        <label class="field-label" for="tier">Default service tier</label>
+        <select id="tier" name="tier" data-flow-select>
+          <option value="standard" selected data-description="Sends traffic to standard processing (pay as you go)">Standard</option>
+          <option value="fast" data-description="Sends traffic to fast processing (pay as you go, with an automatic ramp-up period)">Fast</option>
+          <option value="flex" data-description="Cheaper processing that may be delayed during busy periods">Flex</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <h3>Avatars, meta, badge</h3>
+        <label class="field-label" for="author">Author</label>
+        <select id="author" name="author" data-flow-select data-fs-search="true" data-fs-search-placeholder="Search authors...">
+          <option value="maya" data-avatar="MP" data-meta="maya@example.com" data-badge="Admin" selected>Maya Patel</option>
+          <option value="leo" data-avatar="LM" data-meta="leo@example.com" data-badge="Editor">Leo Martin</option>
+          <option value="jonas" data-avatar="JB" data-meta="jonas@example.com" data-badge="Author">Jonas Berg</option>
+          <option value="ava" data-avatar="AN" data-meta="ava@example.com" data-badge="Author">Ava Novak</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <h3>Multiple, create</h3>
+        <label class="field-label" for="tags">Tags</label>
+        <select id="tags" name="tags" multiple data-flow-select data-fs-create="true" data-fs-placeholder="Add tags...">
+          <option value="design" selected>Design</option>
+          <option value="javascript" selected>JavaScript</option>
+          <option value="java">Java</option>
+          <option value="jamstack">Jamstack</option>
+          <option value="css">CSS</option>
+          <option value="html">HTML</option>
+          <option value="a11y">Accessibility</option>
+        </select>
+
+        <label class="field-label gap" for="limited">Up to 3</label>
+        <select id="limited" name="limited" multiple data-flow-select data-fs-max-items="3" data-fs-placeholder="Pick up to 3">
+          <option value="red">Red</option>
+          <option value="green">Green</option>
+          <option value="blue">Blue</option>
+          <option value="yellow">Yellow</option>
+          <option value="purple">Purple</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <h3>Long list, groups</h3>
+        <label class="field-label" for="timezone">Time zone</label>
+        <select id="timezone" name="timezone" data-flow-select data-fs-search="true"></select>
+      </div>
+
+      <div class="card">
+        <h3>Right to left</h3>
+        <div dir="rtl">
+          <label class="field-label" for="rtl">مدينة</label>
+          <select id="rtl" name="rtl" data-flow-select data-fs-search="true">
+            <option value="1">القاهرة</option>
+            <option value="2">دبي</option>
+            <option value="3">الرياض</option>
+            <option value="4">عمّان</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Remote ===================== -->
+  <section class="section" id="remote">
+    <h2>Remote data (AJAX)</h2>
+    <p>Debounced, cancelled when you keep typing, cached, paged on scroll.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>URL, single</h3>
+        <label class="field-label" for="person">Person</label>
+        <select id="person" name="person" data-flow-select data-fs-url="/api/people" data-fs-placeholder="Search people" data-fs-clearable="true">
+          <option value="p2" selected data-avatar="LP" data-meta="leo.patel@example.com">Leo Patel</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <h3>URL, multiple, paging</h3>
+        <label class="field-label" for="reviewers">Reviewers</label>
+        <select id="reviewers" name="reviewers" multiple data-flow-select data-fs-url="/api/people" data-fs-placeholder="Add reviewers"></select>
+      </div>
+
+      <div class="card">
+        <h3>Minimum 2 characters</h3>
+        <label class="field-label" for="minimum">Person</label>
+        <select id="minimum" name="minimum" data-flow-select data-fs-url="/api/people" data-fs-min-query-length="2" data-fs-placeholder="Type to search"></select>
+      </div>
+
+      <div class="card">
+        <h3>Slow server (1.5 s)</h3>
+        <label class="field-label" for="slow">Person</label>
+        <select id="slow" name="slow" data-flow-select data-fs-url="/api/slow" data-fs-placeholder="Search slowly"></select>
+      </div>
+
+      <div class="card">
+        <h3>Errors and retry</h3>
+        <label class="field-label" for="flaky">Fails every other request</label>
+        <select id="flaky" name="flaky" data-flow-select data-fs-url="/api/flaky" data-fs-cache="false" data-fs-placeholder="Search"></select>
+        <label class="field-label gap" for="broken">Always fails</label>
+        <select id="broken" name="broken" data-flow-select data-fs-url="/api/fail" data-fs-placeholder="Search"></select>
+      </div>
+
+      <div class="card">
+        <h3>Custom load() function</h3>
+        <label class="field-label" for="custom-load">Tags</label>
+        <select id="custom-load" name="customLoad" multiple data-flow-select="manual" data-fs-placeholder="Search tags"></select>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== htmx ===================== -->
+  <section class="section" id="htmx">
+    <h2>htmx</h2>
+    <p>The native <code>change</code> event fires, so <code>hx-trigger="change"</code> just works. Swapped-in selects start automatically.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>hx-post on change</h3>
+        <form hx-post="/api/echo" hx-trigger="change" hx-target="#echo-change">
+          <label class="field-label" for="hx-plan">Plan</label>
+          <select id="hx-plan" name="plan" data-flow-select>
+            <option value="free">Free</option>
+            <option value="team">Team</option>
+            <option value="business">Business</option>
+          </select>
+          <label class="field-label gap" for="hx-tags">Tags</label>
+          <select id="hx-tags" name="tags" multiple data-flow-select data-fs-url="/api/tags"></select>
+        </form>
+        <div id="echo-change" class="echo-box">Change a value.</div>
+      </div>
+
+      <div class="card">
+        <h3>Custom event trigger</h3>
+        <label class="field-label" for="hx-custom">Person</label>
+        <select id="hx-custom" name="person" data-flow-select data-fs-url="/api/people"
+                hx-get="/api/echo" hx-trigger="flowselect:change" hx-target="#echo-custom"></select>
+        <div id="echo-custom" class="echo-box">Listens to <code>flowselect:change</code>.</div>
+      </div>
+
+      <div class="card">
+        <h3>Swap in new markup</h3>
+        <button type="button" class="demo-button" hx-get="/api/fragment" hx-target="#swap-target">Load a select</button>
+        <div id="swap-target" class="swap-target"></div>
+      </div>
+
+      <div class="card">
+        <h3>Replace options</h3>
+        <label class="field-label" for="hx-options">Plan</label>
+        <select id="hx-options" name="plan2" data-flow-select>
+          <option value="">Choose a plan</option>
+          <option value="free">Free</option>
+        </select>
+        <button type="button" class="demo-button gap" hx-get="/api/options" hx-target="#hx-options">Reload options from server</button>
+      </div>
+
+      <div class="card">
+        <h3>Refresh from a server event</h3>
+        <label class="field-label" for="hx-refresh">Person</label>
+        <select id="hx-refresh" name="refresh" data-flow-select data-fs-url="/api/people" data-fs-refresh-on="people-changed"></select>
+        <button type="button" class="demo-button gap" hx-post="/api/notify" hx-target="#notify-result">Server: people changed</button>
+        <div id="notify-result" class="echo-box"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Forms ===================== -->
+  <section class="section" id="forms">
+    <h2>Forms, layout and edge cases</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Required, submit, reset</h3>
+        <form id="plain-form" class="stack-form">
+          <label class="field-label" for="country">Country</label>
+          <select id="country" name="country" required data-flow-select data-fs-search="true">
+            <option value="">Choose a country</option>
+          </select>
+          <label class="field-label" for="langs">Languages</label>
+          <select id="langs" name="langs" multiple required data-flow-select>
+            <option value="en">English</option>
+            <option value="de">German</option>
+            <option value="fr">French</option>
+            <option value="es">Spanish</option>
+          </select>
+          <div class="row">
+            <button type="submit" class="demo-button">Submit</button>
+            <button type="reset" class="demo-button">Reset</button>
+          </div>
+        </form>
+        <div id="form-output" class="echo-box"></div>
+      </div>
+
+      <div class="card">
+        <h3>Inside a scrolling box</h3>
+        <div class="scroll-box">
+          <p>Scroll this box while the list is open.</p>
+          <label class="field-label" for="in-scroll">Status</label>
+          <select id="in-scroll" name="inScroll" data-flow-select>
+            <option>Draft</option>
+            <option>In review</option>
+            <option>Published</option>
+          </select>
+          <div style="height: 300px"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Inside a dialog</h3>
+        <button type="button" class="demo-button" id="open-dialog">Open dialog</button>
+        <dialog id="demo-dialog" class="demo-dialog">
+          <form method="dialog">
+            <label class="field-label" for="dialog-select">Priority</label>
+            <select id="dialog-select" name="priority" data-flow-select>
+              <option>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+            </select>
+            <div class="row gap">
+              <button class="demo-button" value="close">Close</button>
+            </div>
+          </form>
+        </dialog>
+      </div>
+
+      <div class="card">
+        <h3>10,000 options</h3>
+        <label class="field-label" for="huge">Item</label>
+        <select id="huge" name="huge" data-flow-select data-fs-search="true"></select>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Keyboard ===================== -->
+  <section class="section">
+    <h2>Keyboard</h2>
+    <p>Follows the WAI-ARIA combobox pattern. Focus never gets stuck; Tab always moves on.</p>
+    <table class="keys">
+      <thead>
+      <tr><th>Key</th><th>Closed</th><th>Open</th></tr>
+      </thead>
+      <tbody>
+      <tr><td><kbd>↓</kbd> <kbd>↑</kbd></td><td>Opens on the selected option</td><td>Moves the highlight, skipping disabled options</td></tr>
+      <tr><td><kbd>Enter</kbd> <kbd>Space</kbd></td><td>Opens</td><td>Selects the highlighted option. Space types a space while searching</td></tr>
+      <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>Opens on the first or last option</td><td>First or last option</td></tr>
+      <tr><td><kbd>PgUp</kbd> <kbd>PgDn</kbd></td><td>-</td><td>Moves ten options</td></tr>
+      <tr><td><kbd>Alt</kbd> + <kbd>↑</kbd></td><td>-</td><td>Selects the highlighted option and closes</td></tr>
+      <tr><td>Letters</td><td>Without search: selects the next match, like a native select. With search: opens and starts typing</td><td>Filters the list, or jumps to the match without search</td></tr>
+      <tr><td><kbd>Esc</kbd></td><td>Does nothing, so a surrounding dialog can close</td><td>Closes without changing anything</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>Moves to the next field</td><td>Closes and moves to the next field</td></tr>
+      <tr><td><kbd>Backspace</kbd> <kbd>Delete</kbd></td><td>Clears the value when clearable. Multiple: Backspace in an empty input removes the last chip</td><td>Same</td></tr>
+      <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>Multiple: from an empty input, walks through the chips. Backspace or Delete removes the highlighted chip</td><td>Same</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>Event log</h2>
+    <p>Every <code>flowselect:*</code> event and native <code>change</code>, newest first.</p>
+    <ol id="event-log" class="event-log"></ol>
+  </section>
+
+</main>
+
+</body>
+</html>

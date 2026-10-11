@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>Boost page a</title>
+  <link rel="stylesheet" href="/src/flow-select.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 24px;
+      font: 15px/1.5 system-ui, sans-serif;
+    }
+    .field {
+      width: 320px;
+      margin-bottom: 16px;
+    }
+  </style>
+  <script src="/node_modules/htmx.org/dist/htmx.min.js"></script>
+  <script type="module">
+    import { FlowSelect, autoInit } from '/src/index.js';
+    window.FlowSelect = FlowSelect;
+    autoInit();
+    window.fixtureReady = true;
+  </script>
+</head>
+<body hx-boost="true">
+<nav><a id="go-b" href="/tests/fixtures/htmx-boost-b.html">Go to page b</a></nav>
+<h1 id="page-a">Page a</h1>
+<div class="field">
+  <label for="sel-a">Select a</label>
+  <select id="sel-a" name="sela" data-flow-select>
+    <option value="one">Alpha one</option>
+    <option value="two">Alpha two</option>
+    <option value="three">Alpha three</option>
+  </select>
+</div>
+</body>
+</html>

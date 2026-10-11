@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>flow-select htmx auto</title>
+  <link rel="stylesheet" href="/src/flow-select.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 24px;
+      font: 15px/1.5 system-ui, sans-serif;
+    }
+    .field {
+      width: 320px;
+      margin-bottom: 16px;
+    }
+  </style>
+  <script src="/node_modules/htmx.org/dist/htmx.min.js"></script>
+  <script type="module">
+    import { FlowSelect, autoInit } from '/src/index.js';
+    window.FlowSelect = FlowSelect;
+    window.fsInits = 0;
+    document.addEventListener('flowselect:init', () => { window.fsInits += 1; });
+    autoInit();
+    window.fixtureReady = true;
+  </script>
+</head>
+<body>
+<div class="field">
+  <label for="static">Static</label>
+  <select id="static" name="static" data-flow-select>
+    <option value="">Pick one</option>
+    <option value="a">Alpha</option>
+    <option value="b">Beta</option>
+  </select>
+</div>
+<div id="app"></div>
+</body>
+</html>

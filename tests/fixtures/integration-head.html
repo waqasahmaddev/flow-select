@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>flow-select integration - head script</title>
+  <link rel="stylesheet" href="/dist/flow-select.css">
+  <style>
+    body { margin: 0; padding: 24px; font: 15px/1.5 system-ui, sans-serif; }
+    .form { width: 360px; }
+    .form label { display: block; margin-top: 12px; }
+    .toolbar { display: flex; align-items: center; gap: 12px; margin-top: 24px; }
+    .marker { display: inline-block; width: 8px; height: 8px; background: #888; }
+  </style>
+  <script src="/dist/flow-select.js"></script>
+</head>
+<body>
+<div class="form">
+  <label for="f-empty">Field, placeholder</label>
+  <select id="f-empty" name="fEmpty" data-flow-select>
+    <option value="">Choose an item</option>
+    <option value="1">First item</option>
+    <option value="2">Second item with a longer label</option>
+  </select>
+  <label for="f-value">Field, value</label>
+  <select id="f-value" name="fValue" data-flow-select>
+    <option value="1">First item</option>
+    <option value="2" selected>Second item</option>
+  </select>
+  <label for="f-search">Field, search and clear</label>
+  <select id="f-search" name="fSearch" data-flow-select data-fs-search="true" data-fs-clearable="true">
+    <option value="">Choose an item</option>
+    <option value="1" selected>First item</option>
+    <option value="2">Second item</option>
+  </select>
+  <label for="f-multi">Field, multiple</label>
+  <select id="f-multi" name="fMulti" multiple data-flow-select data-fs-placeholder="Add items">
+    <option value="1" selected>First</option>
+    <option value="2" selected>Second</option>
+    <option value="3">Third</option>
+  </select>
+  <label for="f-multi-empty">Field, multiple, empty</label>
+  <select id="f-multi-empty" name="fMultiEmpty" multiple data-flow-select data-fs-placeholder="Add items">
+    <option value="1">First</option>
+    <option value="2">Second</option>
+  </select>
+  <label for="m-field">Field, manual</label>
+  <select id="m-field" name="mField" data-flow-select="manual">
+    <option value="1">First item</option>
+    <option value="2">Second item</option>
+  </select>
+  <p id="after-form">Text after the form.</p>
+</div>
+
+<div class="toolbar" id="toolbar">
+  <select id="p-empty" name="pEmpty" aria-label="Pill empty" data-flow-select data-fs-variant="pill">
+    <option value="">All sources</option>
+    <option value="web">Website</option>
+    <option value="mobile">Mobile application with a long name</option>
+  </select>
+  <select id="p-value" name="pValue" aria-label="Pill value" data-flow-select data-fs-variant="pill">
+    <option value="a">Short</option>
+    <option value="b" selected>Last 7 days</option>
+    <option value="c">A much longer option label</option>
+  </select>
+  <select id="p-clear" name="pClear" aria-label="Pill clearable" data-flow-select data-fs-variant="pill" data-fs-clearable="true">
+    <option value="">All workspaces</option>
+    <option value="main" selected>Main workspace</option>
+  </select>
+  <select id="g-empty" name="gEmpty" aria-label="Ghost empty" data-flow-select data-fs-variant="ghost">
+    <option value="">Group by</option>
+    <option value="source">Source</option>
+    <option value="project">Project and long label</option>
+  </select>
+  <select id="g-value" name="gValue" aria-label="Ghost value" data-flow-select data-fs-variant="ghost">
+    <option value="new" selected>Newest first</option>
+    <option value="old">Oldest first</option>
+  </select>
+  <select id="m-pill" name="mPill" aria-label="Pill manual" data-flow-select="manual" data-fs-variant="pill">
+    <option value="a">Manual pill</option>
+    <option value="b">Second</option>
+  </select>
+  <span class="marker" id="toolbar-end"></span>
+</div>
+
+<p id="inline-text">Show
+  <select id="i-pill" name="iPill" aria-label="Inline pill" data-flow-select data-fs-variant="pill">
+    <option value="10">10 rows</option>
+    <option value="100">100 rows</option>
+  </select>
+  per page, sorted by
+  <select id="i-ghost" name="iGhost" aria-label="Inline ghost" data-flow-select data-fs-variant="ghost">
+    <option value="date">Date</option>
+    <option value="name">Name</option>
+  </select>
+  <span class="marker" id="inline-end"></span>
+</p>
+<p id="after-all">End of page.</p>
+</body>
+</html>
