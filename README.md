@@ -4,7 +4,7 @@ A fast, keyboard-first select for plain HTML forms. No dependencies, no framewor
 
 It enhances a normal `<select>`, so the browser still posts the form: ASP.NET Core, PHP, Django, Rails, Laravel and plain HTML forms keep working unchanged.
 
-> **Status:** pre-release. The API may still change before 1.0.
+> **Status:** early release (0.x). The API may still change before 1.0.
 
 ## Features
 
@@ -24,8 +24,8 @@ It enhances a normal `<select>`, so the browser still posts the form: ASP.NET Co
 From a CDN:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flow-select@0.1.0/dist/flow-select.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flow-select@0.1.0/dist/flow-select.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flow-select@0.1.1/dist/flow-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flow-select@0.1.1/dist/flow-select.min.js"></script>
 ```
 
 From npm:

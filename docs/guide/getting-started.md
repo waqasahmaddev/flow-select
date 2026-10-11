@@ -6,12 +6,12 @@
 
 ```html
 <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flow-select@0.1.0/dist/flow-select.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/flow-select@0.1.0/dist/flow-select.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flow-select@0.1.1/dist/flow-select.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flow-select@0.1.1/dist/flow-select.min.js"></script>
 </head>
 ```
 
-The same files are on unpkg: `https://unpkg.com/flow-select@0.1.0/dist/flow-select.min.js`. Pin the version number so an update never changes your site unexpectedly.
+The same files are on unpkg: `https://unpkg.com/flow-select@0.1.1/dist/flow-select.min.js`. Pin the version number so an update never changes your site unexpectedly.
 
 ### From npm
 
